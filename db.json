@@ -89,6 +89,33 @@
       "url": "blob:http://localhost:5173/5b41cf19-3781-4357-87bb-7cc6dcb36daf",
       "author": "  ",
       "date": "17/02/2025 17:11:31"
+    },
+    {
+      "id": "d6df",
+      "name": "WhatsApp Image 2025-01-20 à 22.28.23_e7287ada.jpg",
+      "type": "image/jpeg",
+      "size": 12500,
+      "url": "blob:http://localhost:5173/e5b8aa0d-99bc-480c-8c2c-a836935f4a13",
+      "author": "  ",
+      "date": "17/02/2025 17:34:12"
+    },
+    {
+      "id": "867a",
+      "name": "pizza.png",
+      "type": "image/png",
+      "size": 69630,
+      "url": "blob:http://localhost:5173/ce2ddd5e-46ff-4ea0-8230-1493c04fd131",
+      "author": "  ",
+      "date": "17/02/2025 17:36:07"
+    },
+    {
+      "id": "4d6f",
+      "name": "live-chat.png",
+      "type": "image/png",
+      "size": 36137,
+      "url": "blob:http://localhost:5173/920455a3-fcb4-4533-97ec-a0b498d3428b",
+      "author": "  ",
+      "date": "17/02/2025 17:38:11"
     }
   ]
 }

@@ -17,7 +17,8 @@
                 <p>{{ (file.size / 1024).toFixed(2) }} KB</p>
             </div>
         </div>
-        <button @click="uploadToServer" :disabled="selectedFiles.length === 0 || isLoading" class="mt-4 p-2 bg-blue-500 text-white rounded">
+        <button @click="uploadToServer" :disabled="selectedFiles.length === 0 || isLoading"
+            class="mt-4 p-2 bg-blue-500 text-white rounded">
             <span v-if="isLoading">Uploading...</span>
             <span v-else>Upload to Server</span>
         </button>
@@ -31,11 +32,6 @@
             <button @click="closeErrorDialog">Ok</button>
         </div>
     </div>
-
-    <!-- Spinner de chargement -->
-    <div v-if="isLoading" class="loading-spinner">
-        <div class="spinner"></div>
-    </div>
 </template>
 
 <script setup>
@@ -45,37 +41,44 @@ import { useUserStore } from '../stores/userStore';
 
 const fileStore = useFileStore();
 const userStore = useUserStore();
-const isLoading = ref(false);
-const error = ref('');
-const successMessage = ref('');
-const selectedFiles = ref([]);
-const progress = ref(0);
-const fileInput = ref(null);
-const showErrorDialog = ref(false);
+const isLoading = ref( false );
+const error = ref( '' );
+const successMessage = ref( '' );
+const selectedFiles = ref( [] );
+const progress = ref( 0 );
+const fileInput = ref( null );
+const showErrorDialog = ref( false );
 
-const handleFileUpload = (event) => {
+const handleFileUpload = ( event ) =>
+{
     const files = event.target.files;
-    processFiles(files);
+    processFiles( files );
 };
 
-const handleDrop = (event) => {
+const handleDrop = ( event ) =>
+{
     const files = event.dataTransfer.files;
-    processFiles(files);
+    processFiles( files );
 };
 
-const processFiles = (files) => {
+const processFiles = ( files ) =>
+{
     const maxSize = 50 * 1024 * 1024; // 50MB
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/gif', 'video/mp4', 'application/pdf', 'application/zip'];
+    const allowedTypes = [ 'image/png', 'image/jpeg', 'image/gif', 'video/mp4', 'application/pdf', 'application/zip' ];
 
-    if (files.length > 0) {
-        selectedFiles.value = Array.from(files).map(file => {
-            if (file.size > maxSize) {
-                error.value = `File ${file.name} exceeds the maximum size of 50MB.`;
+    if ( files.length > 0 )
+    {
+        selectedFiles.value = Array.from( files ).map( file =>
+        {
+            if ( file.size > maxSize )
+            {
+                error.value = `File ${ file.name } exceeds the maximum size of 50MB.`;
                 showErrorDialog.value = true;
                 return null;
             }
-            if (!allowedTypes.includes(file.type)) {
-                error.value = `File type ${file.type} is not allowed.`;
+            if ( !allowedTypes.includes( file.type ) )
+            {
+                error.value = `File type ${ file.type } is not allowed.`;
                 showErrorDialog.value = true;
                 return null;
             }
@@ -83,57 +86,67 @@ const processFiles = (files) => {
                 name: file.name,
                 type: file.type,
                 size: file.size,
-                url: URL.createObjectURL(file),
+                url: URL.createObjectURL( file ),
                 author: userStore.user.name,
                 date: new Date().toLocaleString()
             };
-        }).filter(file => file !== null);
+        } ).filter( file => file !== null );
     }
 };
 
-const triggerFileInput = () => {
+const triggerFileInput = () =>
+{
     fileInput.value.click();
 };
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = ( ms ) => new Promise( resolve => setTimeout( resolve, ms ) );
 
-const truncateFileName = (name) => {
+const truncateFileName = ( name ) =>
+{
     const maxLength = 20;
-    if (name.length > maxLength) {
-        return name.substring(0, maxLength) + '...';
+    if ( name.length > maxLength )
+    {
+        return name.substring( 0, maxLength ) + '...';
     }
     return name;
 };
 
-const uploadToServer = async () => {
+const uploadToServer = async () =>
+{
     isLoading.value = true;
-    try {
-        for (let index = 0; index < selectedFiles.value.length; index++) {
-            const file = selectedFiles.value[index];
-            await delay(500); // Délai artificiel de 500ms pour ralentir le rechargement
-            const response = await fetch('http://localhost:5000/files', {
+    try
+    {
+        for ( let index = 0; index < selectedFiles.value.length; index++ )
+        {
+            const file = selectedFiles.value[ index ];
+            await delay( 500 ); // Délai artificiel de 500ms pour ralentir le rechargement
+            const response = await fetch( 'http://localhost:5000/files', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(file)
-            });
-            if (!response.ok) {
-                throw new Error('Failed to upload file to server');
+                body: JSON.stringify( file )
+            } );
+            if ( !response.ok )
+            {
+                throw new Error( 'Failed to upload file to server' );
             }
-            progress.value = ((index + 1) / selectedFiles.value.length) * 100;
+            progress.value = ( ( index + 1 ) / selectedFiles.value.length ) * 100;
         }
         successMessage.value = 'Files uploaded to server successfully!';
         selectedFiles.value = []; // Vider la liste des fichiers sélectionnés après l'upload
-    } catch (err) {
+    } catch ( err )
+    {
         error.value = err.message;
         showErrorDialog.value = true;
-    } finally {
+    } finally
+    {
         isLoading.value = false;
     }
 };
 
-const closeErrorDialog = () => {
+const closeErrorDialog = () =>
+{
     showErrorDialog.value = false;
     error.value = '';
 };
@@ -230,32 +243,5 @@ const closeErrorDialog = () => {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-}
-
-/* Styles pour le spinner de chargement */
-.loading-spinner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid blue;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 </style>
