@@ -2,17 +2,21 @@
     <div>
         <h1>Liste des Fichiers</h1>
         <div v-if="isLoading">Chargement des fichiers...</div>
-        <div class="file-previews" v-if="!isLoading">
-            <div v-for="file in files" :key="file.id" class="file-card">
-                <p>{{ truncateFileName(file.name) }}</p>
-                <img v-if="file.type.startsWith('image/')" :src="file.url" alt="Preview" class="file-preview-image" />
-                <p v-else>Aperçu non disponible</p>
-                <!-- <p>{{ (file.size / 1024).toFixed(2) }} KB</p> -->
-                <!-- <p>{{ file.date }}</p>
-                <p>{{ file.author }}</p> -->
-                <button @click="downloadFile(file.url)">Télécharger</button>
-                <button @click="previewFile(file.id)">Prévisualiser</button>
-                <button @click="deleteFile(file.id)">Supprimer</button>
+        <div v-else>
+            <div v-if="files.length === 0">Aucun fichier disponible.</div>
+            <div class="file-previews" v-else>
+                <div v-for="file in files" :key="file.id" class="file-card">
+                    <p>{{ truncateFileName(file.name) }}</p>
+                    <img v-if="file.type.startsWith('image/')" :src="file.url" alt="Preview"
+                        class="file-preview-image" />
+                    <p v-else>Aperçu non disponible</p>
+                    <h6>{{ (file.size / 1024).toFixed(2) }} KB</h6>
+                    <h6>{{ file.date }}</h6>
+                    <h6>{{ file.author }}</h6>
+                    <button @click="downloadFile(file.url)">Télécharger</button>
+                    <button @click="previewFile(file.id)">Prévisualiser</button>
+                    <button v-if="file.author === userStore.user.name" @click="deleteFile(file.id)">Supprimer</button>
+                </div>
             </div>
         </div>
         <p v-if="error" class="text-red-500">{{ error }}</p>
@@ -22,11 +26,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/userStore';
 
 const files = ref( [] );
 const isLoading = ref( true );
 const error = ref( '' );
 const router = useRouter();
+const userStore = useUserStore();
 
 const truncateFileName = ( name ) =>
 {

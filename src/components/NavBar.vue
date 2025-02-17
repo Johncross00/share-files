@@ -13,14 +13,17 @@
 
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore();
 const user = computed( () => userStore.user );
+const router = useRouter();
 
 const logout = () =>
 {
     userStore.logout();
+    router.push( '/login' );
 };
 </script>
 
@@ -40,9 +43,6 @@ const logout = () =>
     display: flex;
     align-items: center;
     gap: 10px;
-}
-span{
-    color: blue;
 }
 
 button {

@@ -1,12 +1,17 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue';
+import { useUserStore } from './stores/userStore';
+import { computed } from 'vue';
+
+const userStore = useUserStore();
+const isAuthenticated = computed( () => userStore.isAuthenticated );
 
 </script>
 
 <template>
 
-  <header>
+  <header v-if="isAuthenticated">
     <nav>
       <NavBar />
     </nav>
