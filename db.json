@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "id": "2e47",
+      "name": "profile-pic (2).png",
+      "type": "image/png",
+      "size": 940081,
+      "url": "blob:http://localhost:5173/22dd199e-0783-423e-9280-42ae1be5c08c"
+    },
+    {
+      "id": "2fbd",
+      "name": "WhatsApp Image 2025-01-19 à 15.30.40_98394a1b.jpg",
+      "type": "image/jpeg",
+      "size": 92809,
+      "url": "blob:http://localhost:5173/aece322e-79ca-4e4b-a16c-db04906354bf"
+    },
+    {
+      "id": "dda8",
+      "name": "WhatsApp Image 2025-01-19 à 15.30.40_a2576a65.jpg",
+      "type": "image/jpeg",
+      "size": 64641,
+      "url": "blob:http://localhost:5173/3facf2e7-7232-48e4-9b23-32f73383eec6"
+    },
+    {
+      "id": "149a",
+      "name": "WhatsApp Image 2025-01-19 à 15.30.40_e7fc2968.jpg",
+      "type": "image/jpeg",
+      "size": 75520,
+      "url": "blob:http://localhost:5173/aeef7a5c-10c8-4a53-9bd0-60930e63753a"
+    },
+    {
+      "id": "00a5",
+      "name": "SORGHO@.pdf",
+      "type": "application/pdf",
+      "size": 962946,
+      "url": "blob:http://localhost:5173/2c874deb-3f7e-45e5-b405-cd05dc7604f6"
+    },
+    {
+      "id": "6f9c",
+      "name": "SYSTHEM FINANCIER.pdf",
+      "type": "application/pdf",
+      "size": 77610,
+      "url": "blob:http://localhost:5173/fd4cf569-6c97-47c7-aaf0-1c8f47add2d8"
+    }
+  ]
+}

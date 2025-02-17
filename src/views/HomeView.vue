@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import FileUploader from '../components/FileUploader.vue'
+
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <FileUploader />
   </main>
 </template>
