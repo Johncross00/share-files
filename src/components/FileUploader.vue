@@ -18,9 +18,9 @@
             </div>
         </div>
         <button @click="uploadToServer" :disabled="selectedFiles.length === 0 || isLoading"
-            class="mt-4 p-2 bg-blue-500 text-white rounded">
+            class="upload-button mt-4 p-2 bg-blue-500 text-white rounded">
             <span v-if="isLoading">Uploading...</span>
-            <span v-else>Upload to Server</span>
+            <span v-else>Envoyer les fichiers</span>
         </button>
         <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
     </div>
@@ -190,7 +190,7 @@ const closeErrorDialog = () =>
 .progress {
     width: 0;
     height: 5px;
-    background-color: blue;
+    background-color: rgb(0, 255, 34);
     transition: width 0.5s;
 }
 
@@ -221,6 +221,17 @@ const closeErrorDialog = () =>
 
 .text-green-500 {
     color: green;
+}
+
+.upload-button {
+    margin-top: 20px;
+    /* Ajouter de l'espace entre le bouton et la grille de sélection des fichiers */
+}
+
+.upload-button:disabled {
+    background-color: rgba(230, 124, 124, 0.99);
+    /* Changer la couleur du bouton lorsqu'il est désactivé */
+    cursor: not-allowed;
 }
 
 /* Styles pour la boîte de dialogue modale */

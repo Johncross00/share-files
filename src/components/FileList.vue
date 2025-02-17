@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="file-list-container">
         <h1>Liste des Fichiers</h1>
-        <div v-if="isLoading">Chargement des fichiers...</div>
+        <div v-if="isLoading" class="loading">Chargement des fichiers...</div>
         <div v-else>
-            <div v-if="files.length === 0">Aucun fichier disponible.</div>
+            <div v-if="files.length === 0" class="no-files">Aucun fichier disponible.</div>
             <div class="file-previews" v-else>
                 <div v-for="file in files" :key="file.id" class="file-card">
                     <p>{{ truncateFileName(file.name) }}</p>
@@ -13,13 +13,16 @@
                     <h6>{{ (file.size / 1024).toFixed(2) }} KB</h6>
                     <h6>{{ file.date }}</h6>
                     <h6>{{ file.author }}</h6>
-                    <button @click="downloadFile(file.url)">Télécharger</button>
-                    <button @click="previewFile(file.id)">Prévisualiser</button>
-                    <button v-if="file.author === userStore.user.name" @click="deleteFile(file.id)">Supprimer</button>
+                    <div class="file-actions">
+                        <button @click="downloadFile(file.url)">Télécharger</button>
+                        <button @click="previewFile(file.id)">Prévisualiser</button>
+                        <button v-if="file.author === userStore.user.name" @click="deleteFile(file.id)"
+                            class="delete-button">Supprimer</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <p v-if="error" class="text-red-500">{{ error }}</p>
+        <p v-if="error" class="error-message">{{ error }}</p>
     </div>
 </template>
 
@@ -37,11 +40,7 @@ const userStore = useUserStore();
 const truncateFileName = ( name ) =>
 {
     const maxLength = 20;
-    if ( name.length > maxLength )
-    {
-        return name.substring( 0, maxLength ) + '...';
-    }
-    return name;
+    return name.length > maxLength ? name.substring( 0, maxLength ) + '...' : name;
 };
 
 const fetchFiles = async () =>
@@ -98,28 +97,89 @@ onMounted( fetchFiles );
 </script>
 
 <style scoped>
+.file-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.loading,
+.no-files {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .file-previews {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
+    justify-content: center;
     margin-top: 20px;
 }
 
 .file-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid #00ff00ba;
+    border-radius: 15px;
+    padding: 15px;
     text-align: center;
-    width: 150px;
+    width: 180px;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
 }
 
 .file-preview-image {
     max-width: 100%;
-    max-height: 100px;
+    max-height: 120px;
     object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
-.text-red-500 {
+.file-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+button {
+    background: #00ff0061;
+    color: black;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #02ff02;
+}
+
+.delete-button {
+    background: red;
+    color: white;
+}
+
+.delete-button:hover {
+    background: darkred;
+}
+
+.error-message {
     color: red;
+    font-size: 1.2rem;
+    margin-top: 10px;
 }
 </style>

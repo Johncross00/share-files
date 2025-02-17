@@ -1,5 +1,5 @@
 <template>
-    <div v-if="file">
+    <div class="file-preview-container" v-if="file">
         <div v-if="file.type.startsWith('image/')">
             <img :src="file.url" :alt="file.name" class="file-preview-image" />
         </div>
@@ -7,7 +7,7 @@
             <iframe :src="file.url" class="file-preview-iframe" frameborder="0"></iframe>
         </div>
         <div v-else>
-            <p>La prévisualisation de ce fichier n'est pas disponible.</p>
+            <p class="no-preview">La prévisualisation de ce fichier n'est pas disponible.</p>
         </div>
         <div class="file-details">
             <p><strong>Nom:</strong> {{ file.name }}</p>
@@ -18,7 +18,7 @@
         <button @click="closePreview" class="close-button">Fermer</button>
     </div>
     <div v-else>
-        <p>Chargement de la prévisualisation...</p>
+        <p class="loading-text">Chargement de la prévisualisation...</p>
     </div>
 </template>
 
@@ -55,28 +55,62 @@ const closePreview = () =>
 </script>
 
 <style scoped>
+.file-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    color: white;
+    border: 1px solid #00ff00b6;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
 .file-preview-image {
     max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
 }
 
 .file-preview-iframe {
     width: 100%;
     height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
 }
 
 .file-details {
     margin-top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
 }
 
 .close-button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: blue;
-    color: white;
+    background: #00ff008d;
+    color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
+}
+
+.close-button:hover {
+    background: #00cc00;
+}
+
+.loading-text,
+.no-preview {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 </style>
