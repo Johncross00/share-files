@@ -8,60 +8,53 @@ export const useFileStore = defineStore("fileStore", {
   }),
   actions: {
     async fetchFiles() {
-      this.loading = true;
+      this.isLoading = true;
       try {
-        // Simule une requête réseau pour récupérer des fichiers
-        const response = await new Promise((resolve) =>
-          setTimeout(
-            () =>
-              resolve([
-                {
-                  id: 1,
-                  name: "Document1.pdf",
-                  size: "2MB",
-                  date: "2025-02-14",
-                  author: "Utilisateur 1",
-                },
-                {
-                  id: 2,
-                  name: "Image1.jpg",
-                  size: "1.5MB",
-                  date: "2025-02-13",
-                  author: "Utilisateur 1",
-                },
-              ]),
-            1000
-          )
-        );
-        this.files = response;
+        const response = await fetch("http://localhost:5000/files");
+        if (!response.ok) {
+          throw new Error("Failed to fetch files");
+        }
+        this.files = await response.json();
       } catch (err) {
-        this.error = "Erreur lors de la récupération des fichiers";
+        this.error = err.message;
       } finally {
-        this.loading = false;
+        this.isLoading = false;
       }
     },
 
     async uploadFile(file) {
       this.loading = true;
       try {
-        // Simule un upload de fichier
-        const newFile = {
-          id: Date.now().toString(),
-          name: file.name,
-          size: `${(file.size / (1024 * 1024)).toFixed(2)}MB`,
-          date: new Date().toISOString().split("T")[0],
-          author: "Utilisateur 1",
-        };
-        this.files.push(newFile);
+        const response = await fetch("http://localhost:5000/files", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(file),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to upload file");
+        }
+        this.files.push(await response.json());
       } catch (err) {
-        this.error = "Erreur lors de l'upload du fichier";
+        this.error = err.message;
       } finally {
         this.loading = false;
       }
     },
 
-    deleteFile(fileId) {
-      this.files = this.files.filter((file) => file.id !== fileId);
+    async deleteFile(id) {
+      try {
+        const response = await fetch(`http://localhost:5000/files/${id}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to delete file");
+        }
+        this.files = this.files.filter((file) => file.id !== id);
+      } catch (err) {
+        this.error = err.message;
+      }
     },
   },
   getters: {

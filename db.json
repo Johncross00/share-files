@@ -41,6 +41,34 @@
       "type": "application/pdf",
       "size": 77610,
       "url": "blob:http://localhost:5173/fd4cf569-6c97-47c7-aaf0-1c8f47add2d8"
+    },
+    {
+      "id": "1ab5",
+      "name": "WhatsApp Image 2025-02-04 à 22.28.56_9a10c9b3.jpg",
+      "type": "image/jpeg",
+      "size": 3355509,
+      "url": "blob:http://localhost:5173/3cbfa61a-697f-4699-8696-794e0a6b6ea3"
+    },
+    {
+      "id": "6deb",
+      "name": "delivery.png",
+      "type": "image/png",
+      "size": 23208,
+      "url": "blob:http://localhost:5173/9acfe48b-d627-42a4-8f7f-afa0fa26b059"
+    },
+    {
+      "id": "32ad",
+      "name": "delivery.png",
+      "type": "image/png",
+      "size": 23208,
+      "url": "blob:http://localhost:5173/9acfe48b-d627-42a4-8f7f-afa0fa26b059"
+    },
+    {
+      "id": "7e5a",
+      "name": "WhatsApp Image 2025-02-04 à 22.28.56_9a10c9b3.jpg",
+      "type": "image/jpeg",
+      "size": 3355509,
+      "url": "blob:http://localhost:5173/3cbfa61a-697f-4699-8696-794e0a6b6ea3"
     }
   ]
 }
